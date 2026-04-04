@@ -27,6 +27,7 @@ The model is designed for **autonomous navigation in off-road environments**, wh
 * 🖼️ **Overlay visualization for easy interpretation**
 * ⚡ **Fast inference with PyTorch**
 * 🌐 **Frontend UI for real-time prediction**
+* 🔌 **Backend API for model inference**
 
 ---
 
@@ -56,7 +57,6 @@ We implemented a custom **encoder–decoder segmentation network** inspired by U
 
 <img width="446" height="842" alt="image" src="https://github.com/user-attachments/assets/7d7dc6f2-c5ef-4d34-ab81-829cd105700f" />
 
-
 > Left: Original Image
 > Right: Segmentation Overlay
 
@@ -83,9 +83,9 @@ project/
 │   ├── dataset.py         # Data loading
 │   ├── train.py           # Training pipeline
 │   ├── test.py            # Inference script
+│   ├── inference_utils.py # Backend inference logic
 │   ├── metrics.py         # mIoU calculation
 │   ├── losses.py          # Loss functions
-│   ├── inference_utils.py # Backend inference
 │
 ├── outputs/
 │   └── best_model.pt      # Best trained model
@@ -119,7 +119,7 @@ outputs/best_model.pt
 
 ---
 
-### 3️⃣ Run inference
+### 3️⃣ Run inference (offline)
 
 ```bash
 python test.py
@@ -132,7 +132,48 @@ Output:
 
 ---
 
-### 4️⃣ Run frontend
+## 🔌 4️⃣ Start Backend Server (IMPORTANT)
+
+The backend serves the model via an API used by the frontend.
+
+```bash
+cd ml
+python final_test.py
+```
+
+👉 Backend will start on:
+
+```
+http://localhost:8000
+```
+
+---
+
+### 📡 API Endpoint
+
+```
+POST /predict
+```
+
+**Input:**
+
+* `file` → image
+* `mask` (optional) → ground truth mask
+
+**Output JSON:**
+
+```
+{
+  "checkpoint_val_miou": 0.3352,
+  "mask_miou": 0.1852,
+  "prediction": "...",
+  "overlay": "..."
+}
+```
+
+---
+
+## 🌐 5️⃣ Run Frontend
 
 ```bash
 cd frontend
@@ -201,10 +242,11 @@ Final score = average across all classes
 
 ---
 
-TEAM POKEMON
-Ayush Kumar Thakur
-Swarna Champa Murmu
-Muntazir Ali
+## 👥 Team Pokémon
+
+* **Ayush Kumar Thakur**
+* **Swarna Champa Murmu**
+* **Muntazir Ali**
 
 ---
 
