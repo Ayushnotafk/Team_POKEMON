@@ -27,15 +27,31 @@ Install PyTorch for your platform from [pytorch.org](https://pytorch.org) if the
 
 ## 2. Train
 
+**Defaults (time-boxed runs):** `epochs=5`, **OneCycleLR** (`--max-lr 3e-3`), and **mixed precision (AMP)** on CUDA so each epoch is faster and a short run still learns usefully. For maximum quality when you have many hours, use more epochs and/or a lower peak LR.
+
 ```bash
 cd ml
-python train.py --epochs 30 --batch-size 4
+python train.py
 ```
 
-Optional smoke run (few batches per epoch, faster sanity check):
+Rough guide: at ~20 min/epoch, **5 epochs ≈ 100 minutes** on your setup—adjust `--epochs` (e.g. `3`–`4`) if you need slack in a 1.5 h slot.
+
+Higher quality (longer wall time):
+
+```bash
+python train.py --epochs 25 --batch-size 4
+```
+
+Optional smoke run (few batches per epoch):
 
 ```bash
 python train.py --epochs 1 --max-train-batches 20 --max-val-batches 10 --batch-size 4
+```
+
+Legacy-style constant LR (no OneCycle):
+
+```bash
+python train.py --scheduler none --lr 1e-3 --epochs 10
 ```
 
 Best weights are written to `outputs/best_model.pt` (highest validation mIoU).
