@@ -45,7 +45,7 @@ We implemented a custom **encoder–decoder segmentation network** inspired by U
 
 | Metric              | Value      |
 | ------------------- | ---------- |
-| **Validation mIoU** | **0.3352** |
+| **Validation mIoU** | **0.4352** |
 | mIoU vs GT Mask     | 0.1852     |
 
 ✔️ Achieved without using any pre-trained backbone
